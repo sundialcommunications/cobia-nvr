@@ -19,6 +19,7 @@ Check out the live demo: http://nvrdemo.cobianet.com:8888
 * vlc
 * ffmpeg
 * x264
+* Linux (any flavor)
 
 Here's a good guide for building ffmpeg and x264 - https://ffmpeg.org/trac/ffmpeg/wiki/UbuntuCompilationGuide
 
@@ -28,7 +29,7 @@ I would also recommend building vlc from source.
 
 After you have installed the above requirements, follow these steps:
 
-1. unpack source
+1. download the zip tarball above for cobia-nvr and unzip it
 2. cd cobia-nvr/
 3. edit config.js
 4. run node app.js
@@ -50,8 +51,9 @@ recordFps : int
 recordVb : int
 </pre>
 
-Close estimates of disk usage
+### Close estimates of disk usage
 
 128 Vb for 24 hours = ~1.4gb
+
 128 Vb for 30 days = ~42gb
 
