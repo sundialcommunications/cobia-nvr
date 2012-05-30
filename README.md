@@ -5,10 +5,12 @@ Check out the live demo: http://nvrdemo.cobianet.com:8888
 ## Known Working Cameras
 
 * UBNT Aircam - stream urls
+<pre>
   1280X720 -- rtsp://camera-ip-address:554/live/ch00_0
   640X480 -- rtsp://camera-ip-address:554/live/ch01_0
   320X240 -- rtsp://camera-ip-address:554/live/ch02_0
   160X112 -- rtsp://camera-ip-address:554/live/ch03_0
+</pre>
 
 ## Requirements
 
@@ -29,13 +31,13 @@ After you have installed the above requirements, follow these steps:
 1. unpack source
 2. cd cobia-nvr/
 3. edit config.js
-4. run `node app.js`
+4. run node app.js
 
 ## Configuration
 
 Check config.js for configuration options, here are the per camera options:
 
-<code>
+<pre>
 name : string
 stream : string
 streamWidth : int
@@ -46,7 +48,7 @@ record : boolean
 recordScale : float
 recordFps : int
 recordVb : int
-</code>
+</pre>
 
 Close estimates of disk usage
 
