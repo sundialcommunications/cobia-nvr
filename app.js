@@ -112,9 +112,7 @@ require('http').createServer(function (request, response) {
 
 				var s = request.url.split('/');
 				var camName = s[s.length-1];
-				var con = 0;
-
-				console.log(camName);
+				var con = -1;
 
 				for (i=0;i<cams.length;i++) {
 					if (cams[i].name == camName) {
@@ -122,7 +120,9 @@ require('http').createServer(function (request, response) {
 					}
 				}
 
-				if (con > 0) {
+				console.log(camName+' with conId '+con);
+
+				if (con >= 0) {
 					// return cam detail
 
 					var r = getHeader();

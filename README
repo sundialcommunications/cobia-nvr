@@ -2,15 +2,15 @@ cobia-nvr is an open source Network Video Recorder for streaming and recording l
 
 Check out the live demo: http://nvrdemo.cobianet.com:8888
 
-##Known Working Cameras
+## Known Working Cameras
 
-* UBNT Aircam
-1280X720 -- rtsp://camera-ip-address:554/live/ch00_0
-640X480 -- rtsp://camera-ip-address:554/live/ch01_0
-320X240 -- rtsp://camera-ip-address:554/live/ch02_0
-160X112 -- rtsp://camera-ip-address:554/live/ch03_0
+* UBNT Aircam - stream urls
+  1280X720 -- rtsp://camera-ip-address:554/live/ch00_0
+  640X480 -- rtsp://camera-ip-address:554/live/ch01_0
+  320X240 -- rtsp://camera-ip-address:554/live/ch02_0
+  160X112 -- rtsp://camera-ip-address:554/live/ch03_0
 
-##Requirements
+## Requirements
 
 * node.js
 * node-static (npm install node-static)
@@ -22,7 +22,7 @@ Here's a good guide for building ffmpeg and x264 - https://ffmpeg.org/trac/ffmpe
 
 I would also recommend building vlc from source.
 
-##Installation
+## Installation
 
 After you have installed the above requirements, follow these steps:
 
@@ -31,7 +31,7 @@ After you have installed the above requirements, follow these steps:
 3. edit config.js
 4. run `node app.js`
 
-##Configuration
+## Configuration
 
 Check config.js for configuration options, here are the per camera options:
 
