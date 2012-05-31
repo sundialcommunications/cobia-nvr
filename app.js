@@ -170,6 +170,8 @@ require('http').createServer(function (request, response) {
 
 					nn.sort();
 					nn.reverse();
+					// remove current recording
+					nn.splice(0,1);
 
 					for (var i=0;i<nn.length;i++) {
 
