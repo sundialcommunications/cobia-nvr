@@ -53,7 +53,7 @@ function getHeader() {
 }
 
 function getFooter() {
-	return '</div></body></html>';
+	return '</div><div id="footer">Powered by <a href="https://github.com/cobianet/cobia-nvr">cobia-nvr</a></div></body></html>';
 }
 
 // start the server
@@ -207,27 +207,27 @@ function hourly() {
 		if (cams[i].record == true) {
 
 			if (cams[i].recordLimit > 0) {
+				var myc = cams[i];
 				// only keep the *recordLimit* newest files
-				var tc = cams[i];
-
-				fs.readdir('res/data/'+cams[i].name, function (err, files) {
+				fs.readdir('./res/data/'+cams[i].name, function (err, files) {
 					var nn = new Array();
 
-					for (var i=0;i<files.length;i++) {
+					for (var c=0;c<files.length;c++) {
 
-						var ts = files[i].split('.mp4');
-						nn[i] = ts[0];
+						var ts = files[c].split('.mp4');
+						nn[c] = ts[0];
 
 					}
 
 					nn.sort();
 
-					if (nn.length > tc.recordLimit) {
+					if (nn.length > myc.recordLimit) {
+						console.log(nn.length+' chunks exist for '+myc.name+' with limit '+myc.recordLimit);
 
 						// more files than there should be, delete them
-						for (var i=0;i<nn.length-tc.recordLimit;i++) {
-							console.log('deleting '+tc.name+'/'+nn[i]);
-							fs.unlink('./res/data/'+tc.name+'/'+nn[i]+'.mp4');
+						for (var d=0;d<nn.length-myc.recordLimit;d++) {
+							console.log('deleting '+myc.name+'/'+nn[d]);
+							fs.unlink('./res/data/'+myc.name+'/'+nn[d]+'.mp4');
 						}
 
 					}

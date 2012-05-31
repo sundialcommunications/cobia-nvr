@@ -3,15 +3,42 @@ body {
 	font-weight: 300;
 	margin: 0px;
 	padding: 0px;
-	background-color: #aaa;
+	background-color: #eee;
+}
+
+a:link, a:active, a:visited {
+	color: red;
+	text-decoration: none;
+}
+
+a:hover {
+	font-style: italic;
+	color: #c11b17;
 }
 
 #header {
 	margin: 0px;
 	padding: 4px;
-	height: 80px;
-	background-color: #fff;
+	height: 50px;
+	background-color: #333;
+	color: #fff;
 	border-bottom: 2px solid #000;
+}
+
+#header h2 {
+}
+
+#header a {
+	float: right;
+	top: -60px;
+	position: relative;
+}
+
+#footer {
+	clear: both;
+	padding: 4px;
+	font-size: .8em;
+	text-align: right;
 }
 
 #content {
@@ -20,7 +47,7 @@ body {
 
 .cam {
 	float: left;
-	margin: 4px;
+	margin: 2px;
 	position: relative;
 }
 
