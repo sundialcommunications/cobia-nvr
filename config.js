@@ -18,12 +18,12 @@ var config = {}
 // 128 Vb for 30 days = ~42gb
 
 config.cams = [
-{'name':'server_room','stream':'rtsp://192.168.80.4:554/live/ch01_0','streamWidth':'640','streamHeight':'480','streamFps':'.5','streamVb':'128','record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'main_room','stream':'rtsp://192.168.80.82:554/live/ch01_0','streamWidth':'640','streamHeight':'480','streamFps':'.5','streamVb':'128','record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'tech_room','stream':'rtsp://192.168.80.83:554/live/ch01_0','streamWidth':'640','streamHeight':'480','streamFps':'.5','streamVb':'128','record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'ir','stream':'rtsp://192.168.42.9:554/live/ch01_0','streamWidth':'640','streamHeight':'480','streamFps':'.5','streamVb':'128','record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'ir1','stream':'rtsp://192.168.42.3:554/live/ch01_0','streamWidth':'640','streamHeight':'480','streamFps':'.5','streamVb':'128','record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'ir2','stream':'rtsp://192.168.42.13:554/live/ch01_0','streamWidth':'640','streamHeight':'480','streamFps':'.5','streamVb':'128','record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10}
+{'name':'server_room','stream':'rtsp://192.168.80.4:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'main_room','stream':'rtsp://192.168.80.82:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'tech_room','stream':'rtsp://192.168.80.83:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'ir','stream':'rtsp://192.168.42.9:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'ir1','stream':'rtsp://192.168.42.3:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'ir2','stream':'rtsp://192.168.42.13:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10}
 ];
 
 // config.title - NVR title

@@ -17,7 +17,7 @@ function dirExistsSync (d) {
 } 
 
 for (i=0;i<cams.length;i++) {
-	console.log(cams[i].stream);
+	console.log('adding '+cams[i].stream);
 
 	// check that directory exists
 	if (dirExistsSync('res/data/'+cams[i].name) == false) {
@@ -27,7 +27,7 @@ for (i=0;i<cams.length;i++) {
 	}
 
 	// spawn each of the main vlc processes
-	var args = cams[i].stream+' -I dummy --no-sout-audio --sout #transcode{vcodec=MJPG,vb='+cams[i].streamVb+',width='+cams[i].streamWidth+',height='+cams[i].streamHeight+',acodec=none,fps='+cams[i].streamFps+'}:standard{access=http{mime=multipart/x-mixed-replace;boundary=--7b3cc56e5f51db803f790dad720ed50a},mux=mpjpeg,dst=0.0.0.0:'+(5555+i)+'/p.mjpg}';
+	var args = cams[i].stream+' -I dummy --no-sout-audio --mjpeg-fps '+cams[i].streamFps+' --sout #transcode{vcodec=MJPG,vb='+cams[i].streamVb+',width='+cams[i].streamWidth+',height='+cams[i].streamHeight+',acodec=none,fps='+cams[i].streamFps+'}:standard{access=http{mime=multipart/x-mixed-replace;boundary=--7b3cc56e5f51db803f790dad720ed50a},mux=mpjpeg,dst=0.0.0.0:'+(5555+i)+'/p.mjpg}';
 	var sa = args.split(' ');
 
 	cams[i].spawn = spawn('cvlc', sa);
@@ -62,8 +62,7 @@ require('http').createServer(function (request, response) {
 	var uri = url.parse(request.url).pathname;
 	var filename = libpath.join(path, uri);
 
-	console.log('uri: '+uri);
-	console.log('filename: '+filename);
+	console.log(request.connection.remoteAddress+' '+uri);
 
 	// if this is a request to /res then return file
 	if (uri[0] == '/' && uri[1] == 'r' && uri[2] == 'e' && uri[3] == 's') {
@@ -86,7 +85,6 @@ require('http').createServer(function (request, response) {
 				var r = getHeader();
 
 				for (i=0;i<cams.length;i++) {
-					console.log('adding 1 cam');
 					r += '<div class="cam"><span class="overlay"><h2>'+cams[i].name+'</h2><p>';
 					r += '<a href="cam/'+cams[i].name+'">Details</a>';
 					r += '<br /><span style="font-size: .6em;">';
@@ -108,8 +106,6 @@ require('http').createServer(function (request, response) {
 
 			} else if (request.url[0] == '/' && request.url[1] == 'c' && request.url[2] == 'a' && request.url[3] == 'm') {
 
-				console.log('detail request');
-
 				var s = request.url.split('/');
 				var camName = s[s.length-1];
 				var con = -1;
@@ -119,8 +115,6 @@ require('http').createServer(function (request, response) {
 						con = i;
 					}
 				}
-
-				console.log(camName+' with conId '+con);
 
 				if (con >= 0) {
 					// return cam detail
@@ -157,7 +151,6 @@ require('http').createServer(function (request, response) {
 					r += '<li><strong>Hourly Recordings</strong></li>';
 
 					var fArr = fs.readdirSync('res/data/'+cams[con].name);
-					console.log(fArr);
 
 					var nn = new Array();
 
@@ -209,32 +202,31 @@ function hourly() {
 		if (cams[i].record == true) {
 
 			if (cams[i].recordLimit > 0) {
-				var myc = cams[i];
 				// only keep the *recordLimit* newest files
-				fs.readdir('./res/data/'+cams[i].name, function (err, files) {
-					var nn = new Array();
 
-					for (var c=0;c<files.length;c++) {
+				var files = fs.readdirSync('./res/data/'+cams[i].name);
 
-						var ts = files[c].split('.mp4');
-						nn[c] = ts[0];
+				var nn = new Array();
 
+				for (var c=0;c<files.length;c++) {
+
+					var ts = files[c].split('.mp4');
+					nn[c] = ts[0];
+
+				}
+
+				nn.sort();
+
+				if (nn.length > cams[i].recordLimit) {
+					console.log(nn.length+' chunks exist for '+cams[i].name+' with limit '+cams[i].recordLimit);
+
+					// more files than there should be, delete them
+					for (var d=0;d<nn.length-cams[i].recordLimit;d++) {
+						console.log('deleting '+cams[i].name+'/'+nn[d]);
+						fs.unlink('./res/data/'+cams[i].name+'/'+nn[d]+'.mp4');
 					}
 
-					nn.sort();
-
-					if (nn.length > myc.recordLimit) {
-						console.log(nn.length+' chunks exist for '+myc.name+' with limit '+myc.recordLimit);
-
-						// more files than there should be, delete them
-						for (var d=0;d<nn.length-myc.recordLimit;d++) {
-							console.log('deleting '+myc.name+'/'+nn[d]);
-							fs.unlink('./res/data/'+myc.name+'/'+nn[d]+'.mp4');
-						}
-
-					}
-
-				});
+				}
 
 			}
 
@@ -256,7 +248,9 @@ function hourly() {
 	}
 }
 
-hourly();
+setTimeout(function() {
+	hourly();
+}, 5000);
 
 setInterval(function() {
 	hourly();
