@@ -152,15 +152,29 @@ require('http').createServer(function (request, response) {
 					r += '<li>VB:'+cams[con].recordVb+' @ '+gbPerMoRec+'GB per month</li>';
 					r += '<li>Scale: '+cams[con].recordScale+'</li>';
 					r += '<li>FPS: '+cams[con].recordFps+'</li>';
+					r += '<li>Recording Chunk Limit: '+cams[con].recordLimit+'</li>';
 
 					r += '<li><strong>Hourly Recordings</strong></li>';
 
 					var fArr = fs.readdirSync('res/data/'+cams[con].name);
 					console.log(fArr);
 
+					var nn = new Array();
+
 					for (var i=0;i<fArr.length;i++) {
 
-						r += '<li><a href="/res/data/'+cams[con].name+'/'+fArr[i]+'">'+fArr[i]+'</a></li>';
+						var ts = fArr[i].split('.mp4');
+						nn[i] = ts[0];
+
+					}
+
+					nn.sort();
+					nn.reverse();
+
+					for (var i=0;i<nn.length;i++) {
+
+						var date = new Date(nn[i]*1000);
+						r += '<li><a href="/res/data/'+cams[con].name+'/'+nn[i]+'.mp4">'+date.toString()+'</a></li>';
 
 					}
 
@@ -192,12 +206,41 @@ function hourly() {
 
 		if (cams[i].record == true) {
 
+			if (cams[i].recordLimit > 0) {
+				// only keep the *recordLimit* newest files
+				var tc = cams[i];
+
+				fs.readdir('res/data/'+cams[i].name, function (err, files) {
+					var nn = new Array();
+
+					for (var i=0;i<files.length;i++) {
+
+						var ts = files[i].split('.mp4');
+						nn[i] = ts[0];
+
+					}
+
+					nn.sort();
+
+					if (nn.length > tc.recordLimit) {
+
+						// more files than there should be, delete them
+						for (var i=0;i<nn.length-tc.recordLimit;i++) {
+							console.log('deleting '+tc.name+'/'+nn[i]);
+							fs.unlink('./res/data/'+tc.name+'/'+nn[i]+'.mp4');
+						}
+
+					}
+
+				});
+
+			}
+
 			console.log('starting hourly chunk for '+cams[i].name);
 
 			var ts = String(Math.round(new Date().getTime() / 1000));
 
 			// note timeout of 1 hour, will kill process
-			//var cmd = 'cvlc http://127.0.0.1:'+(5555+i)+'/p.mjpg -Idummy --no-sout-audio --sout \'#transcode{vcodec=MJPG,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=asf,access=file,dst=res/data/'+cams[i].name+'-'+ts+'.asf}\'';
 			var cmd = 'cvlc http://127.0.0.1:'+(5555+i)+'/p.mjpg -Idummy --no-sout-audio --sout \'#transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}\'';
 			var pid = exec(cmd, { timeout: 3600000 }, function (error, stdout, stderr) {
 				//console.log('stdout: ' + stdout);
