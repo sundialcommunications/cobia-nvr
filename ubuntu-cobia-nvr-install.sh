@@ -14,7 +14,7 @@
 
 # get deps
 
-sudo apt-get install zlib1g-dev libfaad-dev libfaac-dev libmp3lame-dev libxvidcore-dev libpopt-dev libbz2-dev libncurses5-dev libpcap0.8-dev cmake libreadline-dev subversion vim g++ yasm libssl-dev libjpeg-dev libtheora-dev build-essential git-core autoconf libtool libhal-dev libmad0-dev libpostproc-dev libgcrypt11-dev gettext liba52-0.7.4-dev libdvbpsi-dev git build-essential libssl-dev nodejs
+sudo apt-get install zlib1g-dev libfaad-dev libfaac-dev libmp3lame-dev libxvidcore-dev libpopt-dev libbz2-dev libncurses5-dev libpcap0.8-dev cmake libreadline-dev subversion vim g++ yasm libssl-dev libjpeg-dev libtheora-dev build-essential git-core autoconf libtool libhal-dev libmad0-dev libpostproc-dev libgcrypt11-dev gettext liba52-0.7.4-dev libdvbpsi-dev git build-essential libssl-dev
 
 # build gpac from source
 
@@ -71,6 +71,15 @@ sudo make install
 
 cd
 sudo ldconfig
+
+# build node
+
+cd
+git clone https://github.com/joyent/node.git
+cd node
+./configure
+make
+sudo make install
 
 # get cobia-nvr
 
