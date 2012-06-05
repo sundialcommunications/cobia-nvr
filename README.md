@@ -15,24 +15,35 @@ Check out the live demo: http://nvrdemo.cobianet.com:8888
 ## Requirements
 
 * node.js
-* node-static (npm install node-static)
 * vlc
 * ffmpeg
 * x264
 * Linux (any flavor)
 
-Here's a good guide for building ffmpeg and x264 - https://ffmpeg.org/trac/ffmpeg/wiki/UbuntuCompilationGuide
-
-I would also recommend building vlc from source.
-
 ## Installation
 
-After you have installed the above requirements, follow these steps:
+### Ubuntu
 
-1. download the zip tarball above for cobia-nvr and unzip it
-2. cd cobia-nvr/
-3. edit config.js
-4. run node app.js
+ubuntu-cobia-nvr-install.sh should install everything for you on Ubuntu from a fresh install.
+
+This script will take a long time to run, it downloads and builds all of the above requirements from source.
+
+Simply run this command on a Ubuntu box and wait for everything to finish building:
+<code>
+wget https://raw.github.com/cobianet/cobia-nvr/master/ubuntu-cobia-nvr-install.sh
+chmod +x ubuntu-cobia-nvr-install.sh
+./ubuntu-cobia-nvr-install.sh
+</code>
+
+Then you just need to edit config.js and run node app.js to start the server.
+
+### Other Linux
+
+Build node, vlc, ffmpeg and x264 from source.
+
+Clone cobia-nvr from Github.
+
+Then you just need to edit config.js and run node app.js to start the server.
 
 ## Configuration
 
@@ -59,12 +70,9 @@ var config = {}
 // 128 Vb for 30 days = ~42gb
 
 config.cams = [
-{'name':'server_room','stream':'rtsp://192.168.80.4:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'main_room','stream':'rtsp://192.168.80.82:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'tech_room','stream':'rtsp://192.168.80.83:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'ir','stream':'rtsp://192.168.42.9:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'ir1','stream':'rtsp://192.168.42.3:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'ir2','stream':'rtsp://192.168.42.13:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10}
+{'name':'server_room','stream':'rtsp://192.168.80.4:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'main_room','stream':'rtsp://192.168.80.82:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'tech_room','stream':'rtsp://192.168.80.83:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':96,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
 ];
 
 // config.title - NVR title

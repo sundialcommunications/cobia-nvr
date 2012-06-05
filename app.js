@@ -3,10 +3,10 @@ var util  = require('util'),
     fs = require('fs'),
     libpath = require('path'),
     url = require('url'),
-    static = require('node-static'),
+    static = require('./node-static'),
     config = require('./config'),
-    exec = require('child_process').exec,
-    mime = require('mime');
+    exec = require('child_process').exec;
+   // mime = require('mime');
 
 var path = '.';
 var cams = config.cams;
