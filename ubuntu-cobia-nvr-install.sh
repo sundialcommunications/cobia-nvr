@@ -14,7 +14,7 @@
 
 # get deps
 
-sudo apt-get install zlib1g-dev libfaad-dev libfaac-dev libmp3lame-dev libxvidcore-dev libpopt-dev libbz2-dev libncurses5-dev libpcap0.8-dev cmake libreadline-dev subversion vim g++ yasm libssl-dev libjpeg-dev libtheora-dev build-essential git-core autoconf libtool libhal-dev libmad0-dev libpostproc-dev libgcrypt11-dev gettext liba52-0.7.4-dev libdvbpsi-dev git build-essential libssl-dev node
+sudo apt-get install zlib1g-dev libfaad-dev libfaac-dev libmp3lame-dev libxvidcore-dev libpopt-dev libbz2-dev libncurses5-dev libpcap0.8-dev cmake libreadline-dev subversion vim g++ yasm libssl-dev libjpeg-dev libtheora-dev build-essential git-core autoconf libtool libhal-dev libmad0-dev libpostproc-dev libgcrypt11-dev gettext liba52-0.7.4-dev libdvbpsi-dev git build-essential libssl-dev nodejs
 
 # build gpac from source
 
