@@ -29,11 +29,11 @@ ubuntu-cobia-nvr-install.sh should install everything for you on Ubuntu from a f
 This script will take a long time to run, it downloads and builds all of the above requirements from source.
 
 Simply run this command on a Ubuntu box and wait for everything to finish building:
-<code>
+<pre>
 wget https://raw.github.com/cobianet/cobia-nvr/master/ubuntu-cobia-nvr-install.sh
 chmod +x ubuntu-cobia-nvr-install.sh
 ./ubuntu-cobia-nvr-install.sh
-</code>
+</pre>
 
 Then you just need to edit config.js and run node app.js to start the server.
 
