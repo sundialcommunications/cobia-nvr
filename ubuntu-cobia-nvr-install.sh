@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # cobia-nvr installation script for Ubuntu
 
@@ -11,6 +12,8 @@
 # Ubuntu 12.04
 # older Ubuntu's, 11.04 and 11.10 do not work because liblivemedia-dev is too old
 # you could try to build live555 with vlc if you wanted to use an older Ubuntu
+
+# make sure you have the multiverse repo enabled
 
 # get deps
 
@@ -26,6 +29,7 @@ sudo chmod +x configure
 ./configure --use-ffmpeg=no
 make lib
 sudo make install-lib
+sudo ldconfig
 
 # build x264 from source
 
@@ -35,6 +39,7 @@ cd x264/
 ./configure --enable-mp4-output --enable-shared
 make
 sudo make install
+sudo ldconfig
 
 # build ffmpeg from source
 
@@ -44,6 +49,7 @@ cd ffmpeg
 ./configure --enable-shared --enable-gpl --enable-nonfree --enable-libfaac --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid  --enable-pthreads --enable-encoder=mpeg4 --enable-encoder=aac --enable-encoder=ac3
 make
 sudo make install
+sudo ldconfig
 
 # build lua from source
 
@@ -56,6 +62,7 @@ sed s/'-O2 -Wall'/'-O2 -fPIC -Wall'/ src/Makefile > /tmp/asdf1234
 mv /tmp/asdf1234 src/Makefile
 make linux
 sudo make install
+sudo ldconfig
 
 # build vlc from source
 
@@ -66,10 +73,6 @@ cd vlc
 ./configure --enable-faad --enable-merge-ffmpeg --disable-xcb --disable-qt4 --disable-skins2 --disable-alsa --enable-live555
 make
 sudo make install
-
-# ldconfig
-
-cd
 sudo ldconfig
 
 # build node
@@ -80,6 +83,7 @@ cd node
 ./configure
 make
 sudo make install
+sudo ldconfig
 
 # get cobia-nvr
 
