@@ -22,7 +22,7 @@ Check out the live demo: http://nvrdemo.cobianet.com:8888
 
 ## Installation
 
-### Ubuntu
+### Ubuntu 12.04
 
 ubuntu-cobia-nvr-install.sh should install everything for you on Ubuntu from a fresh install.
 

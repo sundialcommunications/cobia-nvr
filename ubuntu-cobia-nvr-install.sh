@@ -9,12 +9,12 @@
 
 # tested on the following Ubuntu releases:
 # Ubuntu 12.04
-# Ubuntu 11.10
-# Ubuntu 11.04
+# older Ubuntu's, 11.04 and 11.10 do not work because liblivemedia-dev is too old
+# you could try to build live555 with vlc if you wanted to use an older Ubuntu
 
 # get deps
 
-sudo apt-get install zlib1g-dev libfaad-dev libfaac-dev libmp3lame-dev libxvidcore-dev libpopt-dev libbz2-dev libncurses5-dev libpcap0.8-dev cmake libreadline-dev subversion vim g++ yasm libssl-dev libjpeg-dev libtheora-dev build-essential git-core autoconf libtool libhal-dev libmad0-dev libpostproc-dev libgcrypt11-dev gettext liba52-0.7.4-dev libdvbpsi-dev git build-essential libssl-dev
+sudo apt-get install zlib1g-dev libfaad-dev libfaac-dev libmp3lame-dev libxvidcore-dev libpopt-dev libbz2-dev libncurses5-dev libpcap0.8-dev cmake libreadline-dev subversion vim g++ yasm libssl-dev libjpeg-dev libtheora-dev build-essential git-core autoconf libtool libhal-dev libmad0-dev libpostproc-dev libgcrypt11-dev gettext liba52-0.7.4-dev libdvbpsi-dev git build-essential libssl-dev liblivemedia-dev
 
 # build gpac from source
 
@@ -63,7 +63,7 @@ cd
 git clone git://git.videolan.org/vlc.git --depth 1
 cd vlc
 ./bootstrap
-./configure --enable-faad --enable-merge-ffmpeg --disable-xcb --disable-qt4 --disable-skins2 --enable-libdvdpsi --disable-alsa
+./configure --enable-faad --enable-merge-ffmpeg --disable-xcb --disable-qt4 --disable-skins2 --disable-alsa --enable-live555
 make
 sudo make install
 
