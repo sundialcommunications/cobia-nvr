@@ -94,7 +94,7 @@ require('http').createServer(function (request, response) {
 						r += 'not recording';
 					}
 					r += '</span></p></span>';
-					r += '<img width="'+cams[i].streamWidth+'" height="'+cams[i].streamHeight+'" src="http://69.94.230.84:'+(5555+i)+'/p.mjpg" />';
+					r += '<img width="'+cams[i].streamWidth+'" height="'+cams[i].streamHeight+'" src="http://'+config.externalAddress+':'+(5555+i)+'/p.mjpg" />';
 					r += '</div>';
 				}
 
@@ -123,7 +123,7 @@ require('http').createServer(function (request, response) {
 
 					r += '<h2>'+cams[con].name+'</h2>';
 					r += '<div class="cam" style="float: right; margin-right: 100px;">';
-					r += '<img width="'+cams[con].streamWidth+'" height="'+cams[con].streamHeight+'" src="http://69.94.230.84:'+(5555+con)+'/p.mjpg" />';
+					r += '<img width="'+cams[con].streamWidth+'" height="'+cams[con].streamHeight+'" src="http://'+config.externalAddress+':'+(5555+con)+'/p.mjpg" />';
 					r += '</div><div class="camDetail"><h2>Details</h2><ul>';
 
 					r += '<li><strong>Streaming</strong></li>';

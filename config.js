@@ -26,4 +26,7 @@ config.cams = [
 // config.title - NVR title
 config.title = 'Cobianet Cams NVR';
 
+// config.externalAddress - IP or DNS
+config.externalAddress = 'nvrdemo.cobianet.com';
+
 module.exports = config;
