@@ -26,7 +26,7 @@ wget http://downloads.sourceforge.net/project/gpac/GPAC/GPAC%200.4.5/gpac-0.4.5.
 tar xzf gpac-0.4.5.tar.gz 
 cd gpac/
 sed s/'LDFLAGS="$LDFLAGS -Wl --warn-common"'/'LDFLAGS="$LDFLAGS -Wl"'/ configure > /tmp/jjey773d
-mv /tmp/jjey773d configure
+mv -f /tmp/jjey773d configure
 sudo chmod +x configure
 ./configure --use-ffmpeg=no
 make lib
@@ -61,7 +61,7 @@ tar xzf lua-5.1.4.tar.gz
 cd lua-5.1.4
 #make local
 sed s/'-O2 -Wall'/'-O2 -fPIC -Wall'/ src/Makefile > /tmp/asdf1234
-mv /tmp/asdf1234 src/Makefile
+mv -f /tmp/asdf1234 src/Makefile
 make linux
 sudo make install
 sudo ldconfig
