@@ -1,6 +1,7 @@
 var util  = require('util'),
     spawn = require('child_process').spawn,
     fs = require('fs'),
+    os = require('os'),
     libpath = require('path'),
     url = require('url'),
     static = require('./node-static'),
@@ -49,11 +50,11 @@ for (i=0;i<cams.length;i++) {
 var fileServer = new static.Server('./');
 
 function getHeader() {
-	return '<!DOCTYPE html><html><head><title>'+config.title+'</title><link type="text/css" media="screen" rel="stylesheet" href="/res/screen.css" /></head><body><div id="header"><h2 class="title">'+config.title+'</h2><a href="/">All Cameras</a></div><div id="content">';
+	return '<!DOCTYPE html><html><head><title>'+config.title+'</title><link type="text/css" media="screen" rel="stylesheet" href="/res/screen.css" />'+config.headAppend+'</head><body><div id="header"><h2 class="title">'+config.title+'</h2><a href="/">All Cameras</a></div><div id="content">';
 }
 
 function getFooter() {
-	return '</div><div id="footer">Powered by <a href="https://github.com/cobianet/cobia-nvr">cobia-nvr</a></div></body></html>';
+	return '</div><div id="footer">load avg '+os.loadavg()[0]+' | Powered by <a href="https://github.com/cobianet/cobia-nvr">cobia-nvr</a></div>'+config.bodyAppend+'</body></html>';
 }
 
 // start the server
@@ -85,8 +86,8 @@ require('http').createServer(function (request, response) {
 				var r = getHeader();
 
 				for (i=0;i<cams.length;i++) {
-					r += '<div class="cam"><span class="overlay"><h2>'+cams[i].name+'</h2><p>';
-					r += '<a href="cam/'+cams[i].name+'">Details</a>';
+					r += '<a href="cam/'+cams[i].name+'"><div class="cam"><span class="overlay"><h2>'+cams[i].name+'</h2><p>';
+					//r += '<a href="cam/'+cams[i].name+'">Details</a>';
 					r += '<br /><span style="font-size: .6em;">';
 					if (cams[i].record == true) {
 						r += 'recording';
@@ -95,7 +96,7 @@ require('http').createServer(function (request, response) {
 					}
 					r += '</span></p></span>';
 					r += '<img width="'+cams[i].streamWidth+'" height="'+cams[i].streamHeight+'" src="http://'+config.externalAddress+':'+(5555+i)+'/p.mjpg" />';
-					r += '</div>';
+					r += '</div></a>';
 				}
 
 				r += getFooter();
@@ -236,7 +237,7 @@ function hourly() {
 
 			// note timeout of 1 hour, will kill process
 			var cmd = 'cvlc http://127.0.0.1:'+(5555+i)+'/p.mjpg -Idummy --no-sout-audio --sout \'#transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}\'';
-			var pid = exec(cmd, { timeout: 3600000 }, function (error, stdout, stderr) {
+			var pid = exec(cmd, { killSignal: 'SIGKILL', timeout: 3600000 }, function (error, stdout, stderr) {
 				//console.log('stdout: ' + stdout);
 				//console.log('stderr: ' + stderr);
 				if (error !== null) {
