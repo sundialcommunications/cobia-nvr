@@ -27,21 +27,34 @@ for (i=0;i<cams.length;i++) {
 		fs.mkdirSync('./res/data/'+cams[i].name);
 	}
 
-	// spawn each of the main vlc processes
-	var args = cams[i].stream+' -I dummy --no-sout-audio --mjpeg-fps '+cams[i].streamFps+' --sout #transcode{vcodec=MJPG,vb='+cams[i].streamVb+',width='+cams[i].streamWidth+',height='+cams[i].streamHeight+',acodec=none,fps='+cams[i].streamFps+'}:standard{access=http{mime=multipart/x-mixed-replace;boundary=--7b3cc56e5f51db803f790dad720ed50a},mux=mpjpeg,dst=0.0.0.0:'+(5555+i)+'/p.mjpg}';
+	// spawn main stream
+	var args = cams[i].stream+' -I dummy --no-sout-audio --sout #standard{access=http,mux=ts,dst=0.0.0.0:'+(4444+i)+'}';
 	var sa = args.split(' ');
-
-	cams[i].spawn = spawn('cvlc', sa);
-
+	cams[i].spawn = spawn('vlc', sa);
 	cams[i].spawn.stdout.on('data', function (data) {
 		//console.log('stdout: ' + data);
 	});
-
 	cams[i].spawn.stderr.on('data', function (data) {
 		//console.log('stderr: ' + data);
 	});
-
 	cams[i].spawn.on('exit', function (code) {
+		console.log('child process exited with code ' + code);
+	});
+
+}
+
+for (i=0;i<cams.length;i++) {
+	// spawn mjpeg stream
+	args = 'http://127.0.0.1:'+(4444+i)+' -I dummy --no-sout-audio --mjpeg-fps '+cams[i].streamFps+' --sout #transcode{vcodec=MJPG,vb='+cams[i].streamVb+',width='+cams[i].streamWidth+',height='+cams[i].streamHeight+',acodec=none,fps='+cams[i].streamFps+'}:standard{access=http{mime=multipart/x-mixed-replace;boundary=--7b3cc56e5f51db803f790dad720ed50a},mux=mpjpeg,dst=0.0.0.0:'+(5555+i)+'/p.mjpg}';
+	sa = args.split(' ');
+	cams[i].spawnMJ = spawn('vlc', sa);
+	cams[i].spawnMJ.stdout.on('data', function (data) {
+		//console.log('stdout: ' + data);
+	});
+	cams[i].spawnMJ.stderr.on('data', function (data) {
+		//console.log('stderr: ' + data);
+	});
+	cams[i].spawnMJ.on('exit', function (code) {
 		console.log('child process exited with code ' + code);
 	});
 
@@ -236,7 +249,7 @@ function hourly() {
 			var ts = String(Math.round(new Date().getTime() / 1000));
 
 			// note timeout of 1 hour, will kill process
-			var cmd = 'cvlc http://127.0.0.1:'+(5555+i)+'/p.mjpg -Idummy --no-sout-audio --sout \'#transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}\'';
+			var cmd = 'vlc http://127.0.0.1:'+(4444+i)+' -Idummy --no-sout-audio --sout \'#transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}\'';
 			var pid = exec(cmd, { killSignal: 'SIGKILL', timeout: 3600000 }, function (error, stdout, stderr) {
 				//console.log('stdout: ' + stdout);
 				//console.log('stderr: ' + stderr);
@@ -249,9 +262,7 @@ function hourly() {
 	}
 }
 
-setTimeout(function() {
-	hourly();
-}, 5000);
+hourly();
 
 setInterval(function() {
 	hourly();
