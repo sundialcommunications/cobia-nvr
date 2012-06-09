@@ -255,7 +255,6 @@ function hourly() {
 
 			var args = 'http://127.0.0.1:'+(4444+i)+' -Idummy --no-sout-audio --sout #transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}';
 			var sa = args.split(' ');
-			console.log(sa);
 			cams[i].spawnRecord = spawn('vlc', sa);
 			cams[i].spawnRecord.stdout.on('data', function (data) {
 				//console.log('stdout: ' + data);
