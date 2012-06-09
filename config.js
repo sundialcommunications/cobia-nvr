@@ -17,8 +17,8 @@ config.externalAddress = 'nvrdemo.cobianet.com';
 // recordLimit : int - number of chunks to record, 1 chunk = 1 hour, 24 chunks = 1 day, 168 chunks = 1 week
 
 config.cams = [
-{'name':'server_room','stream':'rtsp://192.168.80.4:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':192,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
-{'name':'main_room','stream':'rtsp://192.168.80.82:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':192,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'server_room','stream':'rtsp://192.168.80.4:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':192,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
+{'name':'main_room','stream':'rtsp://192.168.80.82:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':192,'record':true,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
 {'name':'tech_room','stream':'rtsp://192.168.80.83:554/live/ch01_0','streamWidth':640,'streamHeight':480,'streamFps':1,'streamVb':192,'record':false,'recordScale':1,'recordFps':.5,'recordVb':64,'recordLimit':10},
 ];
 

@@ -248,14 +248,23 @@ function hourly() {
 
 			var ts = String(Math.round(new Date().getTime() / 1000));
 
-			// note timeout of 1 hour, will kill process
-			var cmd = 'vlc http://127.0.0.1:'+(4444+i)+' -Idummy --no-sout-audio --sout \'#transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}\'';
-			var pid = exec(cmd, { killSignal: 'SIGKILL', timeout: 3600000 }, function (error, stdout, stderr) {
-				//console.log('stdout: ' + stdout);
-				//console.log('stderr: ' + stderr);
-				if (error !== null) {
-					console.log('exec error: ' + error);
-				}
+			if (cams[i].spawnRecord) {
+				// kill previous process
+				cams[i].spawnRecord.kill('SIGTERM');
+			}
+
+			var args = 'http://127.0.0.1:'+(4444+i)+' -Idummy --no-sout-audio --sout #transcode{vcodec=h264,vb='+cams[i].recordVb+',scale='+cams[i].recordScale+',acodec=none,fps='+cams[i].recordFps+'}:std{mux=mp4,access=file,dst=res/data/'+cams[i].name+'/'+ts+'.mp4}';
+			var sa = args.split(' ');
+			console.log(sa);
+			cams[i].spawnRecord = spawn('vlc', sa);
+			cams[i].spawnRecord.stdout.on('data', function (data) {
+				//console.log('stdout: ' + data);
+			});
+			cams[i].spawnRecord.stderr.on('data', function (data) {
+				//console.log('stderr: ' + data);
+			});
+			cams[i].spawnRecord.on('exit', function (code) {
+				console.log('record process exited with code ' + code);
 			});
 
 		}
