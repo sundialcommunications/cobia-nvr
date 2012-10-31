@@ -25,7 +25,7 @@ cd
 wget http://downloads.sourceforge.net/project/gpac/GPAC/GPAC%200.4.5/gpac-0.4.5.tar.gz
 tar xzf gpac-0.4.5.tar.gz 
 cd gpac/
-sed s/'LDFLAGS="$LDFLAGS -Wl --warn-common"'/'LDFLAGS="$LDFLAGS -Wl"'/ configure > /tmp/jjey773d
+sed s/'LDFLAGS="$LDFLAGS -Wl --warn-common"'/'LDFLAGS="$LDFLAGS"'/ configure > /tmp/jjey773d
 mv -f /tmp/jjey773d configure
 sudo chmod +x configure
 ./configure --use-ffmpeg=no
