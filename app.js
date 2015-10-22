@@ -83,7 +83,7 @@ require('http').createServer(function (request, response) {
 		request.addListener('end', function () {
 			fileServer.serve(request, response);
 		});
-
+		request.resume();
 	// otherwise use logic
 	} else {
 
