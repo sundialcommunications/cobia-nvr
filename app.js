@@ -67,7 +67,7 @@ function getHeader() {
 }
 
 function getFooter() {
-	return '</div><div id="footer">load avg '+os.loadavg()[0]+' | Powered by <a href="https://github.com/cobianet/cobia-nvr">cobia-nvr</a></div>'+config.bodyAppend+'</body></html>';
+	return '</div><div id="footer">load avg '+os.loadavg()[0]+' | Powered by <a href="https://github.com/sundialcommunications/cobia-nvr">cobia-nvr</a></div>'+config.bodyAppend+'</body></html>';
 }
 
 // start the server
