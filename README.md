@@ -1,5 +1,9 @@
 cobia-nvr is an open source Network Video Recorder for streaming and recording live IP cams.
 
+## Demonstration
+
+http://viewcams.sundialcommunications.com:8888
+
 ## Known Working Cameras
 
 * UBNT Aircam - stream urls
